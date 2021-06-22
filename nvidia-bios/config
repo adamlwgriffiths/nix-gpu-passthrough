@@ -1,0 +1,61 @@
+## User
+VM_USER=
+
+## IOMMU groups
+IOMMU_GPU="01:00.0"
+IOMMU_GPU_AUDIO="01:00.1"
+
+## For extracting the VBIOS
+VBIOS_EXTRACT_PATH=./VBIOS.rom
+NVFLASH=./nvflash_linux
+extract_videobusid="0000:$IOMMU_GPU"
+
+## Virsh devices
+VIRSH_GPU=pci_0000_
+VIRSH_GPU_AUDIO=pci_0000_
+
+# PCI BUS ID
+videoid=""
+audioid=""
+videobusid="0000:$IOMMU_GPU"
+audiobusid="0000:$IOMMU_GPU_AUDIO"
+
+## QEMU options
+RAM=8G
+CORES=8
+MACOS_RAM=8G
+MACOS_CORES=4
+
+## Network
+TAP_INTERFACE=tap0
+TAP_IP="10.10.10.1/24"
+DNSMASQ_CONF="${BASH_SOURCE%/*}/dnsmasq.conf"
+SMB_CONF="${BASH_SOURCE%/*}/smb.conf"
+
+## Log file
+LOG=/home/$VM_USER/qemu_log.txt
+
+## Local path for storage
+IMAGES=/home/$VM_USER/
+
+## VBIOS
+VBIOS=$IMAGES/VBIOS.rom
+
+## Windows
+VIRTIO=$IMAGES/virtio.iso
+WINDOWS_ISO=$IMAGES/win10.iso
+WINDOWS_IMG=$IMAGES/windows.qcow2
+OVMF=/usr/share/ovmf/x64/OVMF_CODE.fd
+OVMF_VARS=/usr/share/ovmf/x64/OVMF_VARS.fd
+
+## MacOS
+MACOS_ISO=$IMAGES/mojave.iso
+MACOS_IMG=$IMAGES/mojave.qcow2
+MACOS_CLOVER=$IMAGES/clover.qcow2
+MACOS_OVMF=$IMAGES/MACOS_OVMF_CODE.fd
+MACOS_OVMF_VARS=$IMAGES/MACOS_OVMF_VARS.fd
+MACOS_OPTIONS="+pcid,+ssse3,+sse4.2,+popcnt,+aes,+xsave,+avx,+xsaveopt,avx2,+smep,check"
+
+## Ulimit
+ULIMIT=$(ulimit -a | grep "max locked memory" | awk '{print $6}')
+ULIMIT_TARGET=$(( $(echo $RAM | tr -d 'G')*1048576+100000 ))
