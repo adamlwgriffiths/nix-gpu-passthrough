@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# at the moment this needs to be run from a VT as root
+# Ctrl + Alt + F1
+# $ sudo su -
+# $ ./run.sh
+
+# script is quite messy as it has a lot of debug from various attempts to
+# get this working.
+# the stats, lsmod.* files contain diagnostic information
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd $DIR
 

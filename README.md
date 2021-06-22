@@ -1,6 +1,8 @@
 # Windows GPU Passthrough with Nix and QEmu/Libvirt
 
-Describes how to setup GPU passthrough with a Linux/Nix host and Windows guest.
+Describes how to setup Single GPU passthrough with a Linux/Nix host and Windows guest.
+
+These notes will still work for Multiple-GPU passthrough.
 
 Caveat: This is currently missing a lot of information as it is written retroactively.
 
@@ -21,9 +23,15 @@ Caveat: This is currently missing a lot of information as it is written retroact
 
 ## What Doesn't
 
-* QEmu/Libvirt start/stop hooks (insufficient permissions?)
+* QEmu/Libvirt start/stop hooks (insufficient permissions?) which means we must
+run this from the terminal (Ctrl + Alt + F1)
 * Often the VM seems to require Install CD to be in or it doesn't bootstrap
 * NixOS 21.05 (GPU won't pass off)
+
+## Issues
+
+* If something goes wrong, you'll be looking at a black screen and may or may not
+have keyboard access.
 
 ## Future Work
 
