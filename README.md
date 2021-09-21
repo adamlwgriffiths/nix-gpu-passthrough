@@ -19,14 +19,7 @@ Caveat: This is currently missing a lot of information as it is written retroact
 * HDD passthrough with VFIO (drive dedicated to VM)
 * USB passthrough (entire USB controller on motherboard)
 * Bluetooth in guest
-* NixOS 20.09
-
-## What Doesn't
-
-* QEmu/Libvirt start/stop hooks (insufficient permissions?) which means we must
-run this from the terminal (Ctrl + Alt + F1)
-* Often the VM seems to require Install CD to be in or it doesn't bootstrap
-* NixOS 21.05 (GPU won't pass off)
+* QEmu hooks
 
 ## Issues
 
@@ -73,7 +66,22 @@ The ID for the GPU and audio devices are `10de:1b80` and `10de:10f0`
 
 #### Nix config
 
-TODO
+```
+# enable access from hooks to bash, modprobe, systemctl, etc
+systemd.services.libvirtd = {
+  path = let
+    env = pkgs.buildEnv {
+      name = "qemu-hook-env";
+      paths = with pkgs; [
+        bash
+        libvirt
+        kmod
+        systemd
+      ];
+    };
+  in [ env ];
+};
+```
 
 
 ### Bootstrapping
@@ -189,6 +197,8 @@ Eg.
 4. Apply
 5. Restart Windows VM
 
+I still get periodic issues with audio desyncing.
+When this happens, switch audio devices to something else and back again.
 
 # References
 
